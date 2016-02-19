@@ -10,7 +10,12 @@ IOT_URL = os.getenv('IOT_URL')
 assert IOT_URL
 
 
-def on_message(client, userdata, message):
+def on_connect(c, userdata, rc):
+    print('Connected ' + str(rc))
+    c.subscribe('whatever')
+
+
+def on_message(c, userdata, message):
     print(message.topic)
     print(str(message.payload))
 
@@ -18,13 +23,13 @@ def on_message(client, userdata, message):
 def main():
     client = paho.Client()
     client.on_message = on_message
+    client.on_connect = on_connect
     client.tls_set(
         ca_certs=IOT_CA_ROOT,
         certfile=IOT_CERT,
         keyfile=IOT_KEY,
         tls_version=ssl.PROTOCOL_TLSv1_2)
     client.connect(IOT_URL, 8883)
-    client.subscribe('whatever')
     client.loop_forever()
 
 
