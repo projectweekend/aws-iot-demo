@@ -12,4 +12,4 @@ def clone():
 def update():
     with cd('aws-iot-demo'):
         run('git pull origin master')
-        sudo('pip install -r requirements.txt')
+        sudo('pip3 install -r requirements.txt')
