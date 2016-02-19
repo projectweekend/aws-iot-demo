@@ -17,7 +17,7 @@ def on_message(client, userdata, message):
 def main():
     client = paho.Client()
     client.on_message = on_message
-    client.tls_set(ca_certs=IOT_CA_ROOT, certfile=IOT_CERT, keyfile=IOT_KEY)
+    client.tls_set(ca_certs=IOT_CA_ROOT, certfile=IOT_CERT, keyfile=IOT_KEY, tls_version=4)
     client.connect(IOT_URL, 8883)
     client.subscribe('whatever')
     client.loop_forever()
